@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  background-color: orange;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.lilita-one-regular {
+  font-family: "Lilita One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* <weight>: Use a value from 100 to 700 */
+.josefin-sans {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* <weight>: Use a value from 100 to 900 */
+.roboto-slab {
+  font-family: "Roboto Slab", serif; 
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* <weight>: Use a value from 200 to 700 */
+.oswald {
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
