@@ -12,6 +12,8 @@ import ServiceSection from './components/ServicesSection';
 import TeamSection from './components/Teams';
 import CustomerReviews from './components/CustomerReviews';
 import AuthModal from './components/AuthModal';
+import Admin from './components/admin';
+import AdminRequest from './components/AdminRequests';
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -57,19 +59,23 @@ function App() {
         onLogout={handleLogout}
       />
       <Routes>
-        <Route />
+        <Route path='/admin' element={<Admin user={user}/>} />
+        <Route path='/adminRequest' element={<AdminRequest user={user}/>} />
+        <Route path='/' element={
+          <>
+            <section id="home"><HeroSection /></section>
+            <section id="why-us"><WhyUs /></section>
+            <section id="form"><FormSection /></section>
+            <section id="about-us"><AboutUs /></section>
+            <section id="services"><ServiceSection /></section>
+            <section id="faq"><FAQSection /></section>
+            <section id="teams"><TeamSection /></section>
+            <section id="review"><CustomerReviews /></section>
+            <section id="footer"><Footer /></section>
+            <section id="scroll"><ScrollToTopButton /></section>
+          </>
+        } />
       </Routes>
-      <section id="home"><HeroSection /></section>
-      <section id="why-us"><WhyUs /></section>
-      <section id="form"><FormSection /></section>
-      <section id="about-us"><AboutUs /></section>
-      <section id="services"><ServiceSection /></section>
-      <section id="faq"><FAQSection /></section>
-      <section id="teams"><TeamSection /></section>
-      <section id="review"><CustomerReviews /></section>
-      <section id="footer"><Footer /></section>
-      <section id="scroll"><ScrollToTopButton /></section>
-
       <AuthModal 
         open={openAuth} 
         handleClose={() => setOpenAuth(false)}

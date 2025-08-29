@@ -11,9 +11,15 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IconButton, InputAdornment } from "@mui/material";
+import { auth } from "../../firebase";
+// import {Firebase} from "@fire"
+import {signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+
+// import { Navigate, useNavigate } from "react-router-dom";
 
 export default function AuthModal({ open, handleClose, setUser }) {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin,] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,25 +29,32 @@ export default function AuthModal({ open, handleClose, setUser }) {
       setPassword('');
     }
   }, [open]);
-
-  const handleSubmit = (e) => {
+const navigate = useNavigate();
+  const handleSubmit = async(e) =>{
+    
     e.preventDefault();
+    try{
+const userCredential =  await signInWithEmailAndPassword(auth,email,password);
+const user = userCredential.user;
+// For Vite projects, use import.meta.env; for CRA, use process.env
+const SUPERADMIN_UID = import.meta.env.VITE_SUPERADMIN_UID ;
 
-    if (isLogin) {
-      const savedUser = JSON.parse(localStorage.getItem("credentials"));
-      if (savedUser?.email === email && savedUser?.password === password) {
-        alert("Login successful!");
-        localStorage.setItem("user", email);
+console.log("Process",SUPERADMIN_UID);
+console.log("Uid from",user.uid);
+if (user.uid === SUPERADMIN_UID) {
+        alert("Superadmin login successful!");
         setUser(email);
         handleClose();
+        navigate("/admin"); 
       } else {
-        alert("Invalid credentials!");
+        alert("You are not authorized as superadmin.");
       }
-    } else {
-      localStorage.setItem("credentials", JSON.stringify({ email, password }));
-      alert("Signup successful! You can now log in.");
-      setIsLogin(true);
+    }catch(e){
+      console.error(e);
+      console.log("Error",e);
     }
+
+    
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -106,7 +119,7 @@ export default function AuthModal({ open, handleClose, setUser }) {
             InputLabelProps={{ sx: { color: 'gray', fontWeight: 'bold', fontFamily: 'Josefin Sans, sans-serif' } }}
           />
         </Box>
-        <Typography variant="body2" sx={{ textAlign: 'center', mt: 2, fontFamily: 'Josefin Sans, sans-serif' }}>
+        {/* <Typography variant="body2" sx={{ textAlign: 'center', mt: 2, fontFamily: 'Josefin Sans, sans-serif' }}>
           {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
           
           <Button 
@@ -116,7 +129,7 @@ export default function AuthModal({ open, handleClose, setUser }) {
           >
             {isLogin ? "Sign up" : "Log in"}
           </Button>
-        </Typography>
+        </Typography> */}
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'center', pb: 2 }}>
         <Button
